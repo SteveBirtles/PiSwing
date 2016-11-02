@@ -6,7 +6,7 @@ public class SwingFrame extends JFrame
 
     public SwingFrame() 
     {
-        this.setSize(1280, 1024);
+        this.setSize(1920, 1080);
         this.setUndecorated(true);
         this.setDefaultCloseOperation(3);
         this.setTitle("Pi Swing Chess");

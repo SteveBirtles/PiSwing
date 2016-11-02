@@ -12,12 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements ActionListener 
 {
     private Timer timer;
     private BufferedImage ball;
     private int mouseX, mouseY;
+    private boolean mouseDown;
+
+    private ArrayList<Integer[]> piStamps = new ArrayList<>();
 
     public GraphicsPanel() 
     {
@@ -46,6 +50,9 @@ public class GraphicsPanel extends JPanel implements ActionListener
     {
         mouseX = (int) MouseInfo.getPointerInfo().getLocation().getX() - (int) this.getLocationOnScreen().getX();
         mouseY = (int) MouseInfo.getPointerInfo().getLocation().getY() - (int) this.getLocationOnScreen().getY();        
+
+        if (mouseDown) piStamps.add(new Integer[] { mouseX, mouseY });
+
         repaint();
     }
 
@@ -55,6 +62,12 @@ public class GraphicsPanel extends JPanel implements ActionListener
         super.paintComponent(g);       
 
         g.drawImage (ball, mouseX - 40, mouseY - 40, this);
+
+        for (Integer[] s : piStamps)
+        {
+            g.drawImage (ball, s[0] - 40, s[1] - 40, this);
+        }
+
     }
 
     class KeyboardyMcKeyboardFace extends KeyAdapter 
@@ -68,17 +81,27 @@ public class GraphicsPanel extends JPanel implements ActionListener
             {
                 System.exit(0);
                 return;
-            }            
+            }
+
+            if (keycode == ' ')
+            {
+                System.out.println("OMG YOU PRESSED SPACE111!");
+            }
+
         }
     }
 
     class MouseyMcMouseFace implements MouseListener
     {
         @Override
-        public void mousePressed(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {
+            mouseDown = true;
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+            mouseDown = false;
+        }
 
         @Override
         public void mouseClicked(MouseEvent e) {}
