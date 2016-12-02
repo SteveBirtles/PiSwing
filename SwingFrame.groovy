@@ -21,6 +21,8 @@ public class SwingFrame extends JFrame
     public static void main(String[] args)
     {
 
+        System.setProperty("java.awt.headless", "true");
+
         SwingUtilities.invokeLater(new Runnable()
             {
                 public void run()
